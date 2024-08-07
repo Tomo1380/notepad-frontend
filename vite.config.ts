@@ -9,11 +9,21 @@ export default defineConfig({
   },
   plugins: [
     remix({
+      basename: "/",
+      buildDirectory: "build",
       future: {
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
         v3_throwAbortReason: true,
       },
+      ignoredRouteFiles: ["**/*.css"],
+      routes(defineRoutes) {
+        return defineRoutes(route => {
+          route("/", "routes/index.tsx");
+          route("/memo", "routes/memo/index.tsx");
+          route("/memo/:memoId", "routes/memo/$memoId.tsx");
+        });
+      }
     }),
     tsconfigPaths(),
   ],
